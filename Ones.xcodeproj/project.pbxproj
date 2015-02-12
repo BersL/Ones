@@ -9,11 +9,28 @@
 /* Begin PBXBuildFile section */
 		CC2269381A8357D500B7C193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2269371A8357D500B7C193 /* AppDelegate.swift */; };
 		CC22693B1A8357D500B7C193 /* Ones.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC2269391A8357D500B7C193 /* Ones.xcdatamodeld */; };
-		CC22693D1A8357D500B7C193 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22693C1A8357D500B7C193 /* ViewController.swift */; };
 		CC2269401A8357D500B7C193 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC22693E1A8357D500B7C193 /* Main.storyboard */; };
 		CC2269421A8357D500B7C193 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2269411A8357D500B7C193 /* Images.xcassets */; };
 		CC2269451A8357D500B7C193 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC2269431A8357D500B7C193 /* LaunchScreen.xib */; };
 		CC2269511A8357D500B7C193 /* OnesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2269501A8357D500B7C193 /* OnesTests.swift */; };
+		CC22696B1A835CDE00B7C193 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22696A1A835CDE00B7C193 /* MasterViewController.swift */; };
+		CC2269771A83BBBB00B7C193 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2269761A83BBBB00B7C193 /* QuartzCore.framework */; };
+		CC22697A1A83CECB00B7C193 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2269791A83CECB00B7C193 /* CalendarMonthView.swift */; };
+		CC22697F1A84A35500B7C193 /* DictionaryToDataTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22697E1A84A35500B7C193 /* DictionaryToDataTransformer.swift */; };
+		CC2269891A84B48A00B7C193 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2269881A84B48A00B7C193 /* DetailViewController.swift */; };
+		CC2ABBFB1A84B52F0078DF3A /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2ABBFA1A84B52F0078DF3A /* CustomSegue.swift */; };
+		CC2ABBFF1A84FBA80078DF3A /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2ABBFE1A84FBA80078DF3A /* CustomUnwindSegue.swift */; };
+		CC2F2CE81A862BAD004042FD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2F2CE71A862BAD004042FD /* AudioToolbox.framework */; };
+		CC2F2CEA1A8646AD004042FD /* CalendarCellLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F2CE91A8646AD004042FD /* CalendarCellLabel.swift */; };
+		CC2F2CEC1A866B49004042FD /* AddTaskUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F2CEB1A866B49004042FD /* AddTaskUnwindSegue.swift */; };
+		CC44F0961A851B430005690D /* MyNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0951A851B430005690D /* MyNavController.swift */; };
+		CC44F0A11A853A340005690D /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A01A853A340005690D /* TaskTableViewCell.swift */; };
+		CC44F0A31A854A130005690D /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A21A854A130005690D /* AddTaskViewController.swift */; };
+		CC44F0A61A854B830005690D /* AddTaskSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A51A854B830005690D /* AddTaskSegue.swift */; };
+		CC44F0A91A85584A0005690D /* bordedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A81A85584A0005690D /* bordedButton.swift */; };
+		CC44F0AB1A85B9410005690D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0AA1A85B9410005690D /* Task.swift */; };
+		CC44F0AD1A85C03B0005690D /* taskOpen.caf in Resources */ = {isa = PBXBuildFile; fileRef = CC44F0AC1A85C03B0005690D /* taskOpen.caf */; };
+		CCF481241A8915DE0057EB35 /* clocked.caf in Resources */ = {isa = PBXBuildFile; fileRef = CCF481231A8915DE0057EB35 /* clocked.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,18 +43,48 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		CC2269671A83580100B7C193 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CC2269321A8357D500B7C193 /* Ones.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ones.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2269361A8357D500B7C193 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2269371A8357D500B7C193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC22693A1A8357D500B7C193 /* Ones.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ones.xcdatamodel; sourceTree = "<group>"; };
-		CC22693C1A8357D500B7C193 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CC22693F1A8357D500B7C193 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CC2269411A8357D500B7C193 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CC2269441A8357D500B7C193 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CC22694A1A8357D500B7C193 /* OnesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC22694F1A8357D500B7C193 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2269501A8357D500B7C193 /* OnesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnesTests.swift; sourceTree = "<group>"; };
+		CC22696A1A835CDE00B7C193 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		CC2269761A83BBBB00B7C193 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CC2269791A83CECB00B7C193 /* CalendarMonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
+		CC22697E1A84A35500B7C193 /* DictionaryToDataTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryToDataTransformer.swift; sourceTree = "<group>"; };
+		CC2269881A84B48A00B7C193 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		CC2ABBFA1A84B52F0078DF3A /* CustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
+		CC2ABBFE1A84FBA80078DF3A /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
+		CC2F2CE71A862BAD004042FD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CC2F2CE91A8646AD004042FD /* CalendarCellLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCellLabel.swift; sourceTree = "<group>"; };
+		CC2F2CEB1A866B49004042FD /* AddTaskUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskUnwindSegue.swift; sourceTree = "<group>"; };
+		CC44F0951A851B430005690D /* MyNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavController.swift; sourceTree = "<group>"; };
+		CC44F0A01A853A340005690D /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		CC44F0A21A854A130005690D /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		CC44F0A51A854B830005690D /* AddTaskSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskSegue.swift; sourceTree = "<group>"; };
+		CC44F0A81A85584A0005690D /* bordedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bordedButton.swift; sourceTree = "<group>"; };
+		CC44F0AA1A85B9410005690D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		CC44F0AC1A85C03B0005690D /* taskOpen.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = taskOpen.caf; path = ../taskOpen.caf; sourceTree = "<group>"; };
+		CCF481231A8915DE0057EB35 /* clocked.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = clocked.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC2F2CE81A862BAD004042FD /* AudioToolbox.framework in Frameworks */,
+				CC2269771A83BBBB00B7C193 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +110,8 @@
 		CC2269291A8357D500B7C193 = {
 			isa = PBXGroup;
 			children = (
+				CC2F2CE71A862BAD004042FD /* AudioToolbox.framework */,
+				CC2269761A83BBBB00B7C193 /* QuartzCore.framework */,
 				CC2269341A8357D500B7C193 /* Ones */,
 				CC22694D1A8357D500B7C193 /* OnesTests */,
 				CC2269331A8357D500B7C193 /* Products */,
@@ -80,12 +131,15 @@
 			isa = PBXGroup;
 			children = (
 				CC2269371A8357D500B7C193 /* AppDelegate.swift */,
-				CC22693C1A8357D500B7C193 /* ViewController.swift */,
 				CC22693E1A8357D500B7C193 /* Main.storyboard */,
+				CC44F0A71A85560A0005690D /* Segues */,
+				CC44F0A41A854A1A0005690D /* Controllers */,
+				CC22697D1A84A0AF00B7C193 /* Model */,
+				CCEA85751A8682D900B45B81 /* CustomViews */,
+				CC2269781A83CE5900B7C193 /* Calendar */,
+				CC2269351A8357D500B7C193 /* Supporting Files */,
 				CC2269411A8357D500B7C193 /* Images.xcassets */,
 				CC2269431A8357D500B7C193 /* LaunchScreen.xib */,
-				CC2269391A8357D500B7C193 /* Ones.xcdatamodeld */,
-				CC2269351A8357D500B7C193 /* Supporting Files */,
 			);
 			path = Ones;
 			sourceTree = "<group>";
@@ -93,6 +147,8 @@
 		CC2269351A8357D500B7C193 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CC44F0AC1A85C03B0005690D /* taskOpen.caf */,
+				CCF481231A8915DE0057EB35 /* clocked.caf */,
 				CC2269361A8357D500B7C193 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -115,6 +171,56 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CC2269781A83CE5900B7C193 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				CC2F2CE91A8646AD004042FD /* CalendarCellLabel.swift */,
+				CC2269791A83CECB00B7C193 /* CalendarMonthView.swift */,
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
+		CC22697D1A84A0AF00B7C193 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CC2269391A8357D500B7C193 /* Ones.xcdatamodeld */,
+				CC44F0AA1A85B9410005690D /* Task.swift */,
+				CC22697E1A84A35500B7C193 /* DictionaryToDataTransformer.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		CC44F0A41A854A1A0005690D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CC44F0A21A854A130005690D /* AddTaskViewController.swift */,
+				CC44F0951A851B430005690D /* MyNavController.swift */,
+				CC22696A1A835CDE00B7C193 /* MasterViewController.swift */,
+				CC2269881A84B48A00B7C193 /* DetailViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		CC44F0A71A85560A0005690D /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				CC44F0A51A854B830005690D /* AddTaskSegue.swift */,
+				CC2F2CEB1A866B49004042FD /* AddTaskUnwindSegue.swift */,
+				CC2ABBFA1A84B52F0078DF3A /* CustomSegue.swift */,
+				CC2ABBFE1A84FBA80078DF3A /* CustomUnwindSegue.swift */,
+			);
+			name = Segues;
+			sourceTree = "<group>";
+		};
+		CCEA85751A8682D900B45B81 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				CC44F0A81A85584A0005690D /* bordedButton.swift */,
+				CC44F0A01A853A340005690D /* TaskTableViewCell.swift */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -125,6 +231,7 @@
 				CC22692E1A8357D500B7C193 /* Sources */,
 				CC22692F1A8357D500B7C193 /* Frameworks */,
 				CC2269301A8357D500B7C193 /* Resources */,
+				CC2269671A83580100B7C193 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +303,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC2269401A8357D500B7C193 /* Main.storyboard in Resources */,
+				CCF481241A8915DE0057EB35 /* clocked.caf in Resources */,
 				CC2269451A8357D500B7C193 /* LaunchScreen.xib in Resources */,
+				CC44F0AD1A85C03B0005690D /* taskOpen.caf in Resources */,
 				CC2269421A8357D500B7C193 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,9 +324,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC22693D1A8357D500B7C193 /* ViewController.swift in Sources */,
+				CC22696B1A835CDE00B7C193 /* MasterViewController.swift in Sources */,
+				CC44F0A11A853A340005690D /* TaskTableViewCell.swift in Sources */,
 				CC22693B1A8357D500B7C193 /* Ones.xcdatamodeld in Sources */,
 				CC2269381A8357D500B7C193 /* AppDelegate.swift in Sources */,
+				CC2ABBFF1A84FBA80078DF3A /* CustomUnwindSegue.swift in Sources */,
+				CC22697F1A84A35500B7C193 /* DictionaryToDataTransformer.swift in Sources */,
+				CC44F0AB1A85B9410005690D /* Task.swift in Sources */,
+				CC44F0A91A85584A0005690D /* bordedButton.swift in Sources */,
+				CC44F0A31A854A130005690D /* AddTaskViewController.swift in Sources */,
+				CC2269891A84B48A00B7C193 /* DetailViewController.swift in Sources */,
+				CC2F2CEA1A8646AD004042FD /* CalendarCellLabel.swift in Sources */,
+				CC2ABBFB1A84B52F0078DF3A /* CustomSegue.swift in Sources */,
+				CC44F0A61A854B830005690D /* AddTaskSegue.swift in Sources */,
+				CC2F2CEC1A866B49004042FD /* AddTaskUnwindSegue.swift in Sources */,
+				CC22697A1A83CECB00B7C193 /* CalendarMonthView.swift in Sources */,
+				CC44F0961A851B430005690D /* MyNavController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Ones/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,9 +473,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Ones/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
@@ -409,6 +534,7 @@
 				CC2269561A8357D500B7C193 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC2269571A8357D500B7C193 /* Build configuration list for PBXNativeTarget "OnesTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +543,7 @@
 				CC2269591A8357D500B7C193 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
