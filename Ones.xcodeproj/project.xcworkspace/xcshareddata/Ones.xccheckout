@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>25C6BAEC-29B8-42EC-A002-9DCEACC78D00</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Ones</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DC892ECE7BF48257A526578C0867725889480E4B</key>
+		<string>https://github.com/BersL/Ones.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Ones.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DC892ECE7BF48257A526578C0867725889480E4B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/BersL/Ones.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DC892ECE7BF48257A526578C0867725889480E4B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DC892ECE7BF48257A526578C0867725889480E4B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Ones</string>
+		</dict>
+	</array>
+</dict>
+</plist>

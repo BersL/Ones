@@ -24,11 +24,13 @@ class CalendarCellLabel: UILabel {
     }
     var isToday : Bool = false{
         didSet{
-            self.textColor = isToday ? UIColor.whiteColor() : UIColor.blackColor()
-            self.setNeedsDisplay()
+            if oldValue != isToday {
+                self.textColor = isToday ? UIColor.whiteColor() : UIColor.blackColor()
+                self.setNeedsDisplay()
+            }
         }
     }
-
+    
     
     init(frame:CGRect , dayNumber: Int, isToday : Bool = false, havePassed : Bool = false){
         super.init(frame:frame)

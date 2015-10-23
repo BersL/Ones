@@ -18,7 +18,9 @@ class Task: NSManagedObject {
     @NSManaged var longestPersist: NSNumber
     @NSManaged var plannedDays: NSNumber
     @NSManaged var startDate: NSDate
+    @NSManaged var endDateStr : String
     @NSManaged var title: String
     @NSManaged var totalPersist: NSNumber
+    @NSManaged var index: NSNumber
 
 }

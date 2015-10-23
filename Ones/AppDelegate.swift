@@ -11,16 +11,30 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
-
+    var masterVC : MasterViewController?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        if NSUserDefaults.standardUserDefaults().valueForKey("soundEnabledState") == nil {
+            NSUserDefaults.standardUserDefaults().setValue(true, forKey: "soundEnabledState")
+        }
+
+        
         self.window?.backgroundColor = UIColor.whiteColor()
         let controller = self.window?.rootViewController as! UINavigationController
-        let masterVC = controller.topViewController as! MasterViewController
-        masterVC.managedObjectContext = self.managedObjectContext
+        masterVC = controller.topViewController as? MasterViewController
+        masterVC?.managedObjectContext = self.managedObjectContext
+        let types = UIUserNotificationType.Badge | UIUserNotificationType.Sound | UIUserNotificationType.Alert
+        var mysettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(mysettings)
+        if UIApplication.sharedApplication().currentUserNotificationSettings().types == UIUserNotificationType.None {
+            NSUserDefaults.standardUserDefaults().setValue(false, forKey: "notificationEnabledState")
+        }else{
+            NSUserDefaults.standardUserDefaults().setValue(true, forKey: "notificationEnabledState")
+        }
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
         return true
     }
@@ -28,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+       
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -37,10 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        if NSDate().dateString() != masterVC?.todayStr {
+            masterVC?.fetchData()
+            masterVC?.tableView.reloadData()
+        }
+        application.applicationIconBadgeNumber = 0;
+
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        application.applicationIconBadgeNumber = 0;
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -48,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
 
     // MARK: - Core Data stack
 
@@ -70,7 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Ones.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        let options = [NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true), NSInferMappingModelAutomaticallyOption:NSNumber(bool: true)]
+        
+        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             let dict = NSMutableDictionary()
@@ -112,5 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+extension UINavigationController{
+    override public func childViewControllerForStatusBarStyle() -> UIViewController{
+        return self.topViewController
+    }
 }
 

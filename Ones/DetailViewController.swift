@@ -105,10 +105,14 @@ class DetailViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     func handleTextFieldDidChangeNotification(notification: NSNotification){
         let textField = notification.object as! UITextField
         let length = count(textField.text)
-        editDoneAlertAction.enabled = (length>0&&length<=15)
+        editDoneAlertAction.enabled = (length>0 && length<=15)
         
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC087E481AB1CC8C0026C7D1 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC087E471AB1CC8C0026C7D1 /* PopupView.swift */; };
 		CC2269381A8357D500B7C193 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2269371A8357D500B7C193 /* AppDelegate.swift */; };
 		CC22693B1A8357D500B7C193 /* Ones.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC2269391A8357D500B7C193 /* Ones.xcdatamodeld */; };
 		CC2269401A8357D500B7C193 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC22693E1A8357D500B7C193 /* Main.storyboard */; };
@@ -27,9 +28,16 @@
 		CC44F0A11A853A340005690D /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A01A853A340005690D /* TaskTableViewCell.swift */; };
 		CC44F0A31A854A130005690D /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A21A854A130005690D /* AddTaskViewController.swift */; };
 		CC44F0A61A854B830005690D /* AddTaskSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A51A854B830005690D /* AddTaskSegue.swift */; };
-		CC44F0A91A85584A0005690D /* bordedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A81A85584A0005690D /* bordedButton.swift */; };
+		CC44F0A91A85584A0005690D /* borderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0A81A85584A0005690D /* borderButton.swift */; };
 		CC44F0AB1A85B9410005690D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC44F0AA1A85B9410005690D /* Task.swift */; };
 		CC44F0AD1A85C03B0005690D /* taskOpen.caf in Resources */ = {isa = PBXBuildFile; fileRef = CC44F0AC1A85C03B0005690D /* taskOpen.caf */; };
+		CC7235D81AB49CEC00EB1E5B /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7235D71AB49CEC00EB1E5B /* HUDViewController.swift */; };
+		CC7557B41AB1F819008836F8 /* PromptHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7557B31AB1F819008836F8 /* PromptHUD.swift */; };
+		CC93E7D31AADF51800F2D53E /* PopupSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC93E7D21AADF51800F2D53E /* PopupSettingView.swift */; };
+		CCEAF6FA1AAA0F2100EABB91 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCEAF6F91AAA0F2100EABB91 /* NotificationCenter.framework */; };
+		CCEAF6FF1AAA0F2100EABB91 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEAF6FE1AAA0F2100EABB91 /* TodayViewController.swift */; };
+		CCEAF7011AAA0F2100EABB91 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCEAF7001AAA0F2100EABB91 /* MainInterface.storyboard */; };
+		CCEAF7041AAA0F2100EABB91 /* Ones-Today.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CCEAF6F71AAA0F2100EABB91 /* Ones-Today.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CCF481241A8915DE0057EB35 /* clocked.caf in Resources */ = {isa = PBXBuildFile; fileRef = CCF481231A8915DE0057EB35 /* clocked.caf */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +48,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CC2269311A8357D500B7C193;
 			remoteInfo = Ones;
+		};
+		CCEAF7021AAA0F2100EABB91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC22692A1A8357D500B7C193 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCEAF6F61AAA0F2000EABB91;
+			remoteInfo = "Ones-Today";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -54,9 +69,21 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCEAF7081AAA0F2100EABB91 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CCEAF7041AAA0F2100EABB91 /* Ones-Today.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CC087E471AB1CC8C0026C7D1 /* PopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		CC2269321A8357D500B7C193 /* Ones.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ones.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2269361A8357D500B7C193 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2269371A8357D500B7C193 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,9 +108,17 @@
 		CC44F0A01A853A340005690D /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		CC44F0A21A854A130005690D /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		CC44F0A51A854B830005690D /* AddTaskSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskSegue.swift; sourceTree = "<group>"; };
-		CC44F0A81A85584A0005690D /* bordedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bordedButton.swift; sourceTree = "<group>"; };
+		CC44F0A81A85584A0005690D /* borderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = borderButton.swift; sourceTree = "<group>"; };
 		CC44F0AA1A85B9410005690D /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		CC44F0AC1A85C03B0005690D /* taskOpen.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = taskOpen.caf; path = ../taskOpen.caf; sourceTree = "<group>"; };
+		CC7235D71AB49CEC00EB1E5B /* HUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDViewController.swift; sourceTree = "<group>"; };
+		CC7557B31AB1F819008836F8 /* PromptHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptHUD.swift; sourceTree = "<group>"; };
+		CC93E7D21AADF51800F2D53E /* PopupSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupSettingView.swift; sourceTree = "<group>"; };
+		CCEAF6F71AAA0F2100EABB91 /* Ones-Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Ones-Today.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCEAF6F91AAA0F2100EABB91 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		CCEAF6FD1AAA0F2100EABB91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCEAF6FE1AAA0F2100EABB91 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		CCEAF7001AAA0F2100EABB91 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		CCF481231A8915DE0057EB35 /* clocked.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = clocked.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +139,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCEAF6F41AAA0F2000EABB91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCEAF6FA1AAA0F2100EABB91 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -114,6 +157,8 @@
 				CC2269761A83BBBB00B7C193 /* QuartzCore.framework */,
 				CC2269341A8357D500B7C193 /* Ones */,
 				CC22694D1A8357D500B7C193 /* OnesTests */,
+				CCEAF6FB1AAA0F2100EABB91 /* Ones-Today */,
+				CCEAF6F81AAA0F2100EABB91 /* Frameworks */,
 				CC2269331A8357D500B7C193 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +168,7 @@
 			children = (
 				CC2269321A8357D500B7C193 /* Ones.app */,
 				CC22694A1A8357D500B7C193 /* OnesTests.xctest */,
+				CCEAF6F71AAA0F2100EABB91 /* Ones-Today.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,10 +261,40 @@
 		CCEA85751A8682D900B45B81 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				CC44F0A81A85584A0005690D /* bordedButton.swift */,
+				CC44F0A81A85584A0005690D /* borderButton.swift */,
 				CC44F0A01A853A340005690D /* TaskTableViewCell.swift */,
+				CC93E7D21AADF51800F2D53E /* PopupSettingView.swift */,
+				CC087E471AB1CC8C0026C7D1 /* PopupView.swift */,
+				CC7557B31AB1F819008836F8 /* PromptHUD.swift */,
+				CC7235D71AB49CEC00EB1E5B /* HUDViewController.swift */,
 			);
 			name = CustomViews;
+			sourceTree = "<group>";
+		};
+		CCEAF6F81AAA0F2100EABB91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CCEAF6F91AAA0F2100EABB91 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCEAF6FB1AAA0F2100EABB91 /* Ones-Today */ = {
+			isa = PBXGroup;
+			children = (
+				CCEAF6FE1AAA0F2100EABB91 /* TodayViewController.swift */,
+				CCEAF7001AAA0F2100EABB91 /* MainInterface.storyboard */,
+				CCEAF6FC1AAA0F2100EABB91 /* Supporting Files */,
+			);
+			path = "Ones-Today";
+			sourceTree = "<group>";
+		};
+		CCEAF6FC1AAA0F2100EABB91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CCEAF6FD1AAA0F2100EABB91 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,10 +308,12 @@
 				CC22692F1A8357D500B7C193 /* Frameworks */,
 				CC2269301A8357D500B7C193 /* Resources */,
 				CC2269671A83580100B7C193 /* Embed Frameworks */,
+				CCEAF7081AAA0F2100EABB91 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CCEAF7031AAA0F2100EABB91 /* PBXTargetDependency */,
 			);
 			name = Ones;
 			productName = Ones;
@@ -260,6 +338,23 @@
 			productReference = CC22694A1A8357D500B7C193 /* OnesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		CCEAF6F61AAA0F2000EABB91 /* Ones-Today */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCEAF7071AAA0F2100EABB91 /* Build configuration list for PBXNativeTarget "Ones-Today" */;
+			buildPhases = (
+				CCEAF6F31AAA0F2000EABB91 /* Sources */,
+				CCEAF6F41AAA0F2000EABB91 /* Frameworks */,
+				CCEAF6F51AAA0F2000EABB91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ones-Today";
+			productName = "Ones-Today";
+			productReference = CCEAF6F71AAA0F2100EABB91 /* Ones-Today.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -275,6 +370,9 @@
 					CC2269491A8357D500B7C193 = {
 						CreatedOnToolsVersion = 6.1.1;
 						TestTargetID = CC2269311A8357D500B7C193;
+					};
+					CCEAF6F61AAA0F2000EABB91 = {
+						CreatedOnToolsVersion = 6.3;
 					};
 				};
 			};
@@ -293,6 +391,7 @@
 			targets = (
 				CC2269311A8357D500B7C193 /* Ones */,
 				CC2269491A8357D500B7C193 /* OnesTests */,
+				CCEAF6F61AAA0F2000EABB91 /* Ones-Today */,
 			);
 		};
 /* End PBXProject section */
@@ -317,6 +416,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCEAF6F51AAA0F2000EABB91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCEAF7011AAA0F2100EABB91 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -331,14 +438,18 @@
 				CC2ABBFF1A84FBA80078DF3A /* CustomUnwindSegue.swift in Sources */,
 				CC22697F1A84A35500B7C193 /* DictionaryToDataTransformer.swift in Sources */,
 				CC44F0AB1A85B9410005690D /* Task.swift in Sources */,
-				CC44F0A91A85584A0005690D /* bordedButton.swift in Sources */,
+				CC44F0A91A85584A0005690D /* borderButton.swift in Sources */,
+				CC93E7D31AADF51800F2D53E /* PopupSettingView.swift in Sources */,
+				CC087E481AB1CC8C0026C7D1 /* PopupView.swift in Sources */,
 				CC44F0A31A854A130005690D /* AddTaskViewController.swift in Sources */,
 				CC2269891A84B48A00B7C193 /* DetailViewController.swift in Sources */,
 				CC2F2CEA1A8646AD004042FD /* CalendarCellLabel.swift in Sources */,
 				CC2ABBFB1A84B52F0078DF3A /* CustomSegue.swift in Sources */,
+				CC7235D81AB49CEC00EB1E5B /* HUDViewController.swift in Sources */,
 				CC44F0A61A854B830005690D /* AddTaskSegue.swift in Sources */,
 				CC2F2CEC1A866B49004042FD /* AddTaskUnwindSegue.swift in Sources */,
 				CC22697A1A83CECB00B7C193 /* CalendarMonthView.swift in Sources */,
+				CC7557B41AB1F819008836F8 /* PromptHUD.swift in Sources */,
 				CC44F0961A851B430005690D /* MyNavController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +462,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCEAF6F31AAA0F2000EABB91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCEAF6FF1AAA0F2100EABB91 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -358,6 +477,11 @@
 			isa = PBXTargetDependency;
 			target = CC2269311A8357D500B7C193 /* Ones */;
 			targetProxy = CC22694B1A8357D500B7C193 /* PBXContainerItemProxy */;
+		};
+		CCEAF7031AAA0F2100EABB91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CCEAF6F61AAA0F2000EABB91 /* Ones-Today */;
+			targetProxy = CCEAF7021AAA0F2100EABB91 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -515,6 +639,35 @@
 			};
 			name = Release;
 		};
+		CCEAF7051AAA0F2100EABB91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Ones-Today/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CCEAF7061AAA0F2100EABB91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = "Ones-Today/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -541,6 +694,15 @@
 			buildConfigurations = (
 				CC2269581A8357D500B7C193 /* Debug */,
 				CC2269591A8357D500B7C193 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCEAF7071AAA0F2100EABB91 /* Build configuration list for PBXNativeTarget "Ones-Today" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCEAF7051AAA0F2100EABB91 /* Debug */,
+				CCEAF7061AAA0F2100EABB91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

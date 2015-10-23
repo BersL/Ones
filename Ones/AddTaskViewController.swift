@@ -18,7 +18,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var nameTxtField: UITextField!
     @IBOutlet weak var daysTxtField: UITextField!
     
-    @IBOutlet weak var submitBtn: bordedButton!
+    @IBOutlet weak var submitBtn: borderButton!
     @IBOutlet var subViews: [UIView]!
 
     var bkgImg : UIImage!
@@ -42,6 +42,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         self.selectedImg = UIImage(named: "selected.png")
         self.unselectedImg = UIImage(named: "unselected.png")
+        self.submitBtn.enabled = false
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,11 +59,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         self.daysTxtField.becomeFirstResponder()
     }
 
-    @IBAction func everydayBtnPressed(sender: AnyObject) {
-        self.everydaySelected = true
-        self.nameTxtField.resignFirstResponder()
-        self.daysTxtField.resignFirstResponder()
-    }
+
     @IBAction func daySelected(sender: UITextField) {
         self.everydaySelected = false
     }
@@ -72,33 +70,34 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate {
         self.daysTxtField.resignFirstResponder()
     }
     
-    @IBAction func daysEndEditing(sender: AnyObject) {
-        if let day = self.daysTxtField.text.toInt(){
-            if day == 0{
-                self.everydaySelected = true
-                self.daysTxtField.text == ""
+    @IBAction func daysEditChanged(sender: UITextField) {
+        if let day = sender.text.toInt() {
+            if day<=0 {
+                sender.text = ""
             }
         }else{
-            self.everydaySelected = true
-            self.daysTxtField.text == ""
+            sender.text = ""
         }
-        
+
     }
     
-    @IBAction func nameEndEditing(sender: UITextField) {
-        self.submitBtn.enabled = !sender.text.isEmpty
-        if count(sender.text) > 16 {
-            sender.text = sender.text.substringToIndex(advance(sender.text.startIndex, 16))
+    
+    
+    @IBAction func nameEditChanged(sender: UITextField) {
+        if count(sender.text) > 0{
+            submitBtn.enabled = true
         }
+        if count(sender.text) > 16 {
+            let index : String.Index = advance(sender.text.startIndex, 16)
+            sender.text = sender.text.substringToIndex(index)
+        }
+        
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "addTaskUnwindDone" {
             let dest = segue.destinationViewController as! MasterViewController

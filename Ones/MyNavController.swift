@@ -26,9 +26,7 @@ class MyNavController: UINavigationController {
             var segue = CustomUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController) { () -> Void in}
             let src = self.viewControllers[0] as! MasterViewController
             segue.topImg = src.topImg!
-            segue.bottomImg = src.bottomImg!
-            segue.topImgOrigionFrame = src.topImgOrigionFrame!
-            segue.bottomImgOrigionFrame = src.bottomImgOrigionFrame!
+            segue.bottomImg = src.bottomImg
             return segue
         }else {
             var segue = AddTaskUnwindSegue(identifier: identifier, source: fromViewController, destination: toViewController, performHandler: { () -> Void in })

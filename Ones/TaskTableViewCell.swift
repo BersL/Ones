@@ -10,25 +10,23 @@ import UIKit
 import QuartzCore
 
 protocol taskTableViewCellDelegate {
-    func cellFinishStateChanged(finished:Bool , indexPath: NSIndexPath)
+    func cellFinishStateChanged(finished:Bool , cell: UITableViewCell)
 }
 
 let deleteLineColor = UIColor(white: 0.4, alpha: 0.5).CGColor
 let deleteLineWidth = CGFloat(1.3)
-let deleteLineAnimationDuration = 0.4
+let deleteLineAnimationDuration = 0.5
 let lineLeft : CGFloat = 15
 let lineRight : CGFloat = UIScreen.mainScreen().bounds.size.width - 15
 
 class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
     
-    var line : UIImageView!
     var delegate : taskTableViewCellDelegate?
     var finishedState : Bool = false
     var rightPan : Bool = false
     var startPoint, endPoint : CGPoint?
     var animationLayerLeft , animationLayerRight : CAShapeLayer?
     var panGesture  : UIPanGestureRecognizer!
-    var indexPath : NSIndexPath!
     
     func finishStateExchange (sender : UIPanGestureRecognizer) {
         if !finishedState {
@@ -75,16 +73,16 @@ class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
                 rightPan = (offset>0)
 
                 if abs(offset) >= self.frame.size.width / 4{
-                    
+        
                     startPoint = CGPoint(x: lineLeft, y: 30)
                     endPoint = CGPoint(x: lineRight, y: 30)
-                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    UIView.animateWithDuration(0.5, animations: { ()-> Void in
                         self.textLabel?.alpha = 1.0
                         return
                     })
                     finishedState = false
                     setupDrawingPath(false)
-                    delegate?.cellFinishStateChanged(finishedState, indexPath: indexPath)
+                    delegate?.cellFinishStateChanged(finishedState, cell:self)
                 }
             }
         }
@@ -133,6 +131,7 @@ class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
         animationLayerRight?.removeAllAnimations()
         animationLayerLeft?.removeAllAnimations()
         
+
         let leftAnimation = CABasicAnimation(keyPath: "strokeEnd")
         leftAnimation.duration = deleteLineAnimationDuration
         leftAnimation.fromValue = NSNumber(double: 0.0)
@@ -160,7 +159,7 @@ class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
         if cnt == 0{
             ++cnt
         }else{
-            delegate?.cellFinishStateChanged(finishedState, indexPath: indexPath)
+            delegate?.cellFinishStateChanged(finishedState, cell:self)
             animationLayerLeft?.removeFromSuperlayer()
             animationLayerLeft = nil
             animationLayerRight?.removeFromSuperlayer()
@@ -176,19 +175,16 @@ class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
         super.awakeFromNib()
         // Initialization code
         self.textLabel?.textAlignment = NSTextAlignment.Center
+        self.textLabel?.font = UIFont.systemFontOfSize(18)
+        self.textLabel?.textColor = UIColor(white: 0.2, alpha: 1.0)
         
         panGesture = UIPanGestureRecognizer(target: self, action: "finishStateExchange:")
-//        panGesture.enabled = false
         panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
         
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        println("touchesBegan")
-        super.touchesBegan(touches, withEvent: event)
-    }
-    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+   override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
@@ -226,7 +222,6 @@ class TaskTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
             CGContextMoveToPoint(context, startPoint.x, startPoint.y)
             CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
             CGContextStrokePath(context)
-
         }
                 
     }

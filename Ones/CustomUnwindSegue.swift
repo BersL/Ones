@@ -9,36 +9,40 @@
 import UIKit
 
 class CustomUnwindSegue: UIStoryboardSegue {
-    var topImg : UIImage!
-    var bottomImg : UIImage!
-    var topImgOrigionFrame : CGRect!
-    var bottomImgOrigionFrame : CGRect!
-
+    var topImg : UIView!
+    var bottomImg : UIView?
+    
     override func perform() {
         let src = self.sourceViewController as! UIViewController
         let dest = self.destinationViewController as! MasterViewController
         
-        let topImgV = UIImageView(image: topImg)
-        let bottomImgV = UIImageView(image: bottomImg)
-        topImgV.frame = topImgOrigionFrame
-        bottomImgV.frame = bottomImgOrigionFrame
+        let topImgV = topImg
+        let bottomImgV = bottomImg
         
         src.view.superview!.addSubview(topImgV)
-        src.view.superview!.addSubview(bottomImgV)
+        if let btmImg = bottomImgV{
+            src.view.superview!.addSubview(btmImg)
+        }
         
         UIView.animateWithDuration(0.6, animations: {[unowned self] () -> Void in
             src.view.alpha = 0.0
             topImgV.center.y += topImgV.frame.size.height
-            bottomImgV.center.y -= bottomImgV.frame.size.height
+            if let btmImg = bottomImgV{
+                btmImg.center.y -= btmImg.frame.size.height
+            }
+            src.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
             src.navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
+            src.navigationItem.rightBarButtonItem?.enabled = false
+            src.navigationItem.leftBarButtonItem?.enabled = false
             }) { (finished:Bool) -> Void in
                 dest.view.alpha = 1.0
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    dest.navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
                     dest.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
                     dest.navigationItem.titleView?.alpha = 1.0
                     return
                     }, completion: {(finished:Bool) -> Void in
-                        bottomImgV.removeFromSuperview()
+                        bottomImgV?.removeFromSuperview()
                         dest.view.removeFromSuperview()
                         src.navigationController?.popViewControllerAnimated(false)
                         if self.identifier == "unwindWithDelete" {
@@ -46,6 +50,8 @@ class CustomUnwindSegue: UIStoryboardSegue {
                         }else{
                             dest.tableView.reloadData()
                         }
+                        dest.navigationItem.leftBarButtonItem?.enabled = true
+                        dest.navigationItem.rightBarButtonItem?.enabled = true
                         
                 })
                 

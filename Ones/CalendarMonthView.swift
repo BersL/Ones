@@ -65,12 +65,6 @@ class CalendarMonthView: UIView {
             cells[i].text = ""
         }
 
-        if calendarMonthAndYear == todayMonthAndYear {
-            cells[today - 1].isToday = true
-        }else{
-            cells[today - 1].isToday = false
-        }
-        
         var lastMonth = calendarMonthAndYear.month - 1
         var lastYear = calendarMonthAndYear.year
         if lastMonth == 0 {
@@ -115,6 +109,7 @@ class CalendarMonthView: UIView {
         for i in 1...days{
             let dateStr = String(calendarMonthAndYear.year) + String(calendarMonthAndYear.month) + String(i)
             cells[i - 1].havePassed = false
+            cells[i - 1].isToday = false
             if let clocked = self.clockRecordDict[dateStr]{
                 cells[i - 1].havePassed = clocked
                 if todayMonthAndYear == calendarMonthAndYear &&  i == today{
@@ -126,6 +121,7 @@ class CalendarMonthView: UIView {
         for i in 1...lastDays{
             let dateStr = String(lastYear) + String(lastMonth) + String(i)
             leftCells[i - 1].havePassed = false
+            leftCells[i - 1].isToday = false
             if let clocked = self.clockRecordDict[dateStr]{
                 leftCells[i - 1].havePassed = clocked
             }
@@ -134,11 +130,15 @@ class CalendarMonthView: UIView {
         for i in 1...nextDays{
             let dateStr = String(nextYear) + String(nextMonth) + String(i)
             rightCells[i - 1].havePassed = false
+            rightCells[i - 1].isToday = false
             if let clocked = self.clockRecordDict[dateStr] {
                 rightCells[i - 1].havePassed = clocked
             }
         }
-
+        
+        if calendarMonthAndYear == todayMonthAndYear {
+            cells[today + firstWeekDay - 2].isToday = true
+        }
     }
     
     var animating : Bool = false

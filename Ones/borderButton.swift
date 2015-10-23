@@ -1,5 +1,5 @@
 //
-//  bordedButton.swift
+//  borderButton.swift
 //  Ones
 //
 //  Created by Bers on 15/2/7.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class bordedButton: UIButton {
+class borderButton: UIButton {
 
     override func awakeFromNib() {
         self.layer.cornerRadius = 5.0

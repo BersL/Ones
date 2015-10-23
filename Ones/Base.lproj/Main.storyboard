@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7zZ-ah-6lb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7zZ-ah-6lb">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
     </dependencies>
@@ -39,7 +39,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Meh-Xy-jAd" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="0K9-Ob-Dgd"/>
                             <constraint firstAttribute="trailing" secondItem="Meh-Xy-jAd" secondAttribute="trailing" id="1PZ-II-TqM"/>
@@ -70,6 +70,12 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Ones" id="qlG-4e-Tra">
+                        <barButtonItem key="leftBarButtonItem" image="settings" id="xla-Ns-HJt">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="settingBtnPressed:" destination="vXZ-lx-hvc" id="Umr-ud-Jd8"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="plus" id="S7s-au-lsb">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -80,12 +86,13 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="settingBtn" destination="xla-Ns-HJt" id="6p9-2E-0BC"/>
                         <outlet property="tableView" destination="Meh-Xy-jAd" id="xkV-hH-j5i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="879" y="1011"/>
+            <point key="canvasLocation" x="927" y="1011"/>
         </scene>
         <!--Add Task View Controller-->
         <scene sceneID="6tH-oh-HSI">
@@ -132,7 +139,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             <connections>
-                                                <action selector="nameEndEditing:" destination="Qc6-qO-nqF" eventType="editingDidEnd" id="LxZ-3P-ISa"/>
+                                                <action selector="nameEditChanged:" destination="Qc6-qO-nqF" eventType="editingChanged" id="18w-ju-IKD"/>
                                                 <outlet property="delegate" destination="Qc6-qO-nqF" id="2Lo-3b-Bym"/>
                                             </connections>
                                         </textField>
@@ -217,7 +224,7 @@
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="daySelected:" destination="Qc6-qO-nqF" eventType="editingDidBegin" id="KL7-sa-WED"/>
-                                                <action selector="daysEndEditing:" destination="Qc6-qO-nqF" eventType="editingDidEnd" id="lLI-Sb-Uu7"/>
+                                                <action selector="daysEditChanged:" destination="Qc6-qO-nqF" eventType="editingChanged" id="3Ay-EB-fUf"/>
                                                 <outlet property="delegate" destination="Qc6-qO-nqF" id="Wer-RN-B14"/>
                                             </connections>
                                         </textField>
@@ -243,17 +250,17 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Twt-4O-iI5" customClass="bordedButton" customModule="Ones" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Twt-4O-iI5" customClass="borderButton" customModule="Ones" customModuleProvider="target">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                             <state key="normal" title="确定添加计划">
                                                 <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <segue destination="S9R-rb-Tvs" kind="unwind" identifier="addTaskUnwindDone" unwindAction="unwindFromAddTask:" id="7jD-ce-WIT"/>
+                                                <segue destination="S9R-rb-Tvs" kind="unwind" identifier="addTaskUnwindDone" unwindAction="unwindFromAddTask:" id="zaN-TG-QUM"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxi-g4-fa6" customClass="bordedButton" customModule="Ones" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxi-g4-fa6" customClass="borderButton" customModule="Ones" customModuleProvider="target">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                             <state key="normal" title="取消">
                                                 <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -434,7 +441,7 @@
                         <outlet property="daysTxtField" destination="fLF-sC-RPs" id="cEk-yW-OUX"/>
                         <outlet property="everydayChoice" destination="Trx-sy-BGY" id="1oy-2e-VLg"/>
                         <outlet property="nameTxtField" destination="27d-LJ-JB1" id="H9G-31-qZ3"/>
-                        <outlet property="submitBtn" destination="Twt-4O-iI5" id="6gj-md-aAK"/>
+                        <outlet property="submitBtn" destination="Twt-4O-iI5" id="aVn-UE-XZd"/>
                         <outletCollection property="subViews" destination="Cwy-Tt-BS5" collectionClass="NSMutableArray" id="Uw9-SO-m2M"/>
                         <outletCollection property="subViews" destination="27d-LJ-JB1" collectionClass="NSMutableArray" id="2Bb-7I-dy9"/>
                         <outletCollection property="subViews" destination="upf-zh-45J" collectionClass="NSMutableArray" id="f4f-OA-IdO"/>
@@ -823,7 +830,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G7K-37-g6R" customClass="bordedButton" customModule="Ones" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G7K-37-g6R" customClass="borderButton" customModule="Ones" customModuleProvider="target">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="fV0-1e-exV"/>
@@ -1043,6 +1050,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7zZ-ah-6lb" customClass="MyNavController" customModule="Ones" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2L2-NB-ujk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1062,6 +1070,7 @@
         <image name="plus" width="28" height="28"/>
         <image name="rightArrow" width="64" height="256"/>
         <image name="selected" width="64" height="64"/>
+        <image name="settings" width="25" height="25"/>
         <image name="unselected" width="64" height="64"/>
     </resources>
 </document>

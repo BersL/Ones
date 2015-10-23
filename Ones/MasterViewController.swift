@@ -19,11 +19,12 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
 
     var managedObjectContext : NSManagedObjectContext?
     var tasksArray : [Task]!
-    var topImg : UIImage?
-    var bottomImg : UIImage?
-    var topImgOrigionFrame : CGRect?
-    var bottomImgOrigionFrame : CGRect?
+    var topImg : UIView?
+    var bottomImg : UIView?
     var noTaskImgV : UIImageView!
+    var todayStr ,yesterdayStr: String!
+    var pathLayer : CAShapeLayer?
+    var settingView : PopupSettingView!
     var taskToAdd : (String, Int)?{
         didSet{
             if let (title , days) = taskToAdd {
@@ -34,43 +35,59 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
                 aNewTask.longestPersist = 0
                 aNewTask.totalPersist = 0
                 aNewTask.startDate = NSDate()
+                aNewTask.endDateStr = NSDate(timeIntervalSinceNow: NSTimeInterval(days * 24 * 3600)).dateString()
                 aNewTask.clockRecord = [String:Bool]()
+                aNewTask.index = NSNumber(int: 0)
+                for task in tasksArray {
+                    task.index = NSNumber(int:task.index.intValue + 1)
+                }
                 self.tasksArray.insert(aNewTask, atIndex: 0)
                 manageObjectContextSave()
-                noTaskImgV.hidden = true
+                taskArrayIsEmpty(false)
                 self.tableView.reloadData()
 
             }
         }
     }
-    var todayStr ,yesterdayStr: String!
+    var clockedTaskNumber : Int = 0 {
+        didSet{
+            if clockedTaskNumber == tasksArray.count {
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+            }else{
+                if UIApplication.sharedApplication().scheduledLocalNotifications.count == 0 && NSUserDefaults.standardUserDefaults().objectForKey("notificationEnabledState") as! Bool{
+                    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                }
+            }
+        }
+    }
+    lazy var notification : UILocalNotification = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        let firstDate = formatter.dateFromString("17:00:00")
+        let tempNotification = UILocalNotification()
+        tempNotification.fireDate = firstDate
+        tempNotification.timeZone = NSTimeZone.defaultTimeZone()
+        tempNotification.applicationIconBadgeNumber = 1
+        tempNotification.soundName = UILocalNotificationDefaultSoundName
+        tempNotification.repeatInterval = NSCalendarUnit.DayCalendarUnit
+        tempNotification.alertBody = "你今天还有没打卡的事项哦^_^"
+        tempNotification.fireDate = firstDate
+        return tempNotification
+    }()
     
     
+    @IBOutlet weak var settingBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         noTaskImgV = UIImageView(frame: CGRectMake(self.view.bounds.width - 145, 0, 150, 100))
         noTaskImgV.image = UIImage(named: "noTask.png")
         self.tableView.addSubview(noTaskImgV)
-        noTaskImgV.hidden = true
-        
+        noTaskImgV.alpha = 0.0
+
         // Do any additional setup after loading the view.
-        var request = NSFetchRequest()
-        var entity = NSEntityDescription.entityForName("Task", inManagedObjectContext: self.managedObjectContext!)
-        request.entity = entity
+        fetchData()
         
-        let sortDescriptor = NSSortDescriptor(key: "startDate", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        var err : NSError?
-        var fetchResults = self.managedObjectContext?.executeFetchRequest(request, error: &err)
-        if let results = fetchResults as? [Task]{
-            self.tasksArray = results
-        }else{
-            fatalError("Fetch Data Error!")
-        }
-        if tasksArray.count == 0{
-            noTaskImgV.hidden = false
-        }
         self.navigationController!.navigationBar.barTintColor = navigationBarBKGColor
         let titleLabel = UILabel(frame: CGRectMake(0, 0, 80, 30))
         titleLabel.textAlignment = NSTextAlignment.Center
@@ -79,73 +96,146 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
         titleLabel.text = "Ones"
         self.navigationItem.titleView = titleLabel
         
-        var date = NSDate()
-        var compo = NSCalendar.currentCalendar().components(NSCalendarUnit.DayCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.YearCalendarUnit, fromDate: date)
-        todayStr = "\(compo.year)\(compo.month)\(compo.day)"
-        
-        date = NSDate(timeIntervalSinceNow: -24*3600)
-        compo = NSCalendar.currentCalendar().components(NSCalendarUnit.DayCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.YearCalendarUnit, fromDate: date)
-        yesterdayStr = "\(compo.year)\(compo.month)\(compo.day)"
+        let showPoint = CGPoint(x: 27, y: 0)
+        let settingViewFrame = CGRectMake(2, 55, 130, 70)
+        settingView = PopupSettingView(showPoint: showPoint, frame: settingViewFrame, heightForArrow: 10)
     }
+    
+    
+    func taskArrayIsEmpty(empty:Bool){
+        if empty {
+            setupTextLayerWithText("Ones")
+            startAnimation()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+        }else{
+            pathLayer?.removeAllAnimations()
+            pathLayer?.removeFromSuperlayer()
+            pathLayer = nil
+            noTaskImgV.alpha = 0.0
+            
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "HH:mm:ss"
+            let firstDate = formatter.dateFromString("21:00:00")
+            
+            if NSUserDefaults.standardUserDefaults().objectForKey("notificationEnabledState") as! Bool{
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
+            }
+        }
+        tableView.scrollEnabled = !empty;
+    }
+    
+    func fetchData(){
+        var request = NSFetchRequest()
+        var entity = NSEntityDescription.entityForName("Task", inManagedObjectContext: self.managedObjectContext!)
+        request.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "index", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        var err : NSError?
+        var fetchResults = self.managedObjectContext?.executeFetchRequest(request, error: &err)
+        if let results = fetchResults as? [Task]{
+            self.tasksArray = results
+        }else{
+            fatalError("Fetch Data Error!")
+        }
+        todayStr = NSDate().dateString()
+        yesterdayStr = NSDate(timeIntervalSinceNow: -24*3600).dateString()
+        
+        for var i = 0 ; i < tasksArray.count ;++i{
+            let item = tasksArray[i]
+            if item.endDateStr.toInt()! <= todayStr.toInt()! && item.plannedDays != -1{
+                for var index = i + 1; index < self.tasksArray.count ; ++index{
+                    tasksArray[index].index = NSNumber(int: tasksArray[index].index.intValue - 1)
+                }
+                managedObjectContext?.deleteObject(item)
+                tasksArray.removeAtIndex(i)
+                manageObjectContextSave()
+            }
+        }
+        
+        if tasksArray.count == 0{
+            taskArrayIsEmpty(true);
+        }
+        
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func settingBtnPressed(sender: UIBarButtonItem) {
+        settingView.show()
+    }
     //Animation Layer Process
+    func setupTextLayerWithText (text:String){
+        pathLayer?.removeFromSuperlayer()
+        pathLayer = nil
+        
+        let font : CTFontRef = CTFontCreateWithName("Menlo-Regular" as CFStringRef, 72.0, nil)
+        let attributes :[NSObject:AnyObject] = [kCTFontAttributeName:font]
+        let attributedStr = NSAttributedString(string: text, attributes: attributes)
+        let line = CTLineCreateWithAttributedString(attributedStr)
+        let runArray = CTLineGetGlyphRuns(line) as! [CTRunRef]
+        
+        let letters = CGPathCreateMutable()
+        for runIndex in 0..<CFArrayGetCount(runArray) {
+            let run: CTRunRef = runArray[runIndex]
+            
+            for runGlyphIndex in 0..<CTRunGetGlyphCount(run) {
+                let thisGlyphRange = CFRangeMake(runGlyphIndex, 1)
+                var glyph: CGGlyph = CGGlyph()
+                var position: CGPoint = CGPoint()
+                CTRunGetGlyphs(run, thisGlyphRange, &glyph)
+                CTRunGetPositions(run, thisGlyphRange, &position)
+                
+                let letter = CTFontCreatePathForGlyph(font, glyph, nil)
+                var t = CGAffineTransformMakeTranslation(position.x, position.y);
+                
+                CGPathAddPath(letters, &t, letter)
+            }
+        }
+        
+        let path = UIBezierPath()
+        path.moveToPoint(CGPointZero)
+        path.appendPath(UIBezierPath(CGPath: letters))
+        pathLayer = CAShapeLayer()
+        pathLayer!.frame = self.tableView.bounds
+        pathLayer!.bounds = CGPathGetBoundingBox(path.CGPath);
+        pathLayer!.backgroundColor = UIColor.clearColor().CGColor
+        pathLayer!.geometryFlipped = true
+        pathLayer!.strokeColor = UIColor.blackColor().CGColor
+        pathLayer!.fillColor = UIColor.clearColor().CGColor;
+        pathLayer!.lineWidth = 2.0;
+        pathLayer!.lineJoin = kCALineJoinBevel
+        pathLayer!.path = path.CGPath
+        var frame = pathLayer!.frame
+        frame.origin.x = (UIScreen.mainScreen().bounds.size.width - frame.size.width)/2
+        frame.origin.y = (UIScreen.mainScreen().bounds.size.height - frame.size.height)/2 - 64
+        pathLayer!.frame = frame
+        self.tableView.layer.addSublayer(pathLayer)
+    }
 
-//    func setupTextLayerWithText (text:String){
-//        pathLayer?.removeFromSuperlayer()
-//        pathLayer = nil
-//        
-//        let letters : CGMutablePathRef = CGPathCreateMutable()
-//        let font : CTFontRef = CTFontCreateWithName("Heiti SC-Bold" as CFStringRef, 72.0, nil)
-//        let attributes :[NSObject:AnyObject] = [kCTFontAttributeName:font]
-//        let attributedStr = NSAttributedString(string: text, attributes: attributes)
-//        var line = CTLineCreateWithAttributedString(attributedStr as CFAttributedStringRef);
-//        var runArray = CTLineGetGlyphRuns(line);
-//        for var runIndex :CFIndex = 0; runIndex < CFArrayGetCount(runArray); runIndex++ {
-//            var run : CTRun = unsafeBitCast(CFArrayGetValueAtIndex(runArray, runIndex), CTRun.self)
-//            let dict : NSDictionary = CTRunGetAttributes(run)
-//            var runFont = dict.valueForKey(kCTFontAttributeName as! String) as! CTFontRef
-//            for var runGlyphIndex :CFIndex = 0; runGlyphIndex < CTRunGetGlyphCount(run); runGlyphIndex++ {
-//                var thisGlyphRange = CFRangeMake(runGlyphIndex, 1)
-//                var glyph = CGGlyph()
-//                var position = CGPoint()
-//                CTRunGetGlyphs(run, thisGlyphRange, &glyph);
-//                CTRunGetPositions(run, thisGlyphRange, &position);
-//                var letter = CTFontCreatePathForGlyph(runFont, glyph, nil);
-//                var t = CGAffineTransformMakeTranslation(position.x, position.y);
-//                CGPathAddPath(letters, &t, letter);
-//            }
-//        }
-//        
-//        let path = UIBezierPath()
-//        path.moveToPoint(CGPointZero)
-//        path.appendPath(UIBezierPath(CGPath: letters))
-//        pathLayer = CAShapeLayer()
-//        pathLayer!.frame = self.tableView.bounds
-//        pathLayer!.bounds = CGPathGetBoundingBox(path.CGPath);
-//        pathLayer!.backgroundColor = UIColor.yellowColor().CGColor
-//        pathLayer!.geometryFlipped = true
-//        pathLayer!.strokeColor = UIColor.redColor().CGColor
-//        pathLayer!.fillColor = nil;
-//        pathLayer!.lineWidth = 10.0;
-//        pathLayer!.lineJoin = kCALineJoinBevel
-////        self.tableView.hidden = true
-//        animationLayer?.addSublayer(pathLayer)
-//    }
-//    
-//    func startAnimation () {
-//        pathLayer!.removeAllAnimations()
-//        let animation = CABasicAnimation(keyPath: "strokeEnd")
-//        animation.duration = 2.0
-//        animation.delegate = self
-//        animation.fromValue = NSNumber(double: 0.0)
-//        animation.toValue = NSNumber(double: 1.0)
-//        pathLayer!.addAnimation(animation, forKey: "strokeEnd")
-//    }
+    func startAnimation () {
+        pathLayer!.removeAllAnimations()
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.duration = 3.5
+        animation.delegate = self
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        pathLayer!.addAnimation(animation, forKey: "strokeEnd")
+        
+    }
     
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        pathLayer?.opacity = 0.5
+        UIView.animateWithDuration(0.5, animations: { [unowned self] () -> Void in
+            self.noTaskImgV.alpha = 1.0
+            return
+        })
+        
+    }
     //End
     
 
@@ -163,7 +253,6 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
         var cell = tableView.dequeueReusableCellWithIdentifier("taskCell") as? TaskTableViewCell
         cell?.textLabel?.text = tasksArray[indexPath.row].title
         cell?.delegate = self
-        cell?.indexPath = indexPath
         if let clocked = tasksArray[indexPath.row].clockRecord[todayStr]{
             cell!.finishedState = clocked
         }else{
@@ -174,30 +263,49 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
         cell?.setNeedsDisplay()
         cell?.textLabel?.alpha = (cell!.finishedState) ? 0.3 : 1.0
         return cell!
+        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60.0
     }
+    
     //End
     
     func exchangeTableViewCellsWithRow1(row1: Int, row2: Int){
+        if row1<row2{
+            for i in row1 + 1...row2{
+                tasksArray[i].index = NSNumber(int: tasksArray[i].index.intValue - 1)
+            }
+            tasksArray[row1].index = NSNumber(integer: row2)
+        }else{
+            for i in row2...row1 - 1{
+                tasksArray[i].index = NSNumber(int: tasksArray[i].index.intValue + 1)
+            }
+            tasksArray[row1].index = NSNumber(integer: row2)
+        }
         let toExchange = tasksArray[row1]
         tasksArray.removeAtIndex(row1)
-        tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: row1, inSection: 0)], withRowAnimation:UITableViewRowAnimation.Bottom)
         tasksArray.insert(toExchange, atIndex: row2)
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: row2, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Top)
+        tableView.moveRowAtIndexPath(NSIndexPath(forRow: row1, inSection: 0), toIndexPath: NSIndexPath(forRow: row2, inSection: 0))
+        manageObjectContextSave()
+
         
     }
     
+    
     func removeTaskAt(#row:Int){
         let taskToDelete = tasksArray[row]
+        for var i = Int(taskToDelete.index) + 1; i<self.tasksArray.count; ++i{
+            tasksArray[i].index = NSNumber(int: tasksArray[i].index.intValue - 1)
+        }
         managedObjectContext?.deleteObject(taskToDelete)
         tasksArray.removeAtIndex(row)
+        
         tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
         manageObjectContextSave()
         if tasksArray.count == 0 {
-            noTaskImgV.hidden = false
+            taskArrayIsEmpty(true)
         }
     }
     
@@ -210,11 +318,13 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
     }
     
     //Delegates
-    func cellFinishStateChanged(finished: Bool , indexPath: NSIndexPath) {
+    func cellFinishStateChanged(finished: Bool , cell: UITableViewCell) {
+        let indexPath = tableView.indexPathForCell(cell) as NSIndexPath!
         var task = tasksArray[indexPath.row]
         task.clockRecord[todayStr] = finished
         
         if finished{
+            PromptHUD.sharedPromptHUD.showWithStyle(PromptHUDStyle.CheckMark)
             playSound()
             task.totalPersist = NSNumber(int: Int(task.totalPersist) + 1)
             if task.longestPersist.intValue == 0 {
@@ -232,6 +342,7 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
             }else{
                 task.currentPersist = NSNumber(int: 1)
             }
+            clockedTaskNumber += 1
         }else{
             task.totalPersist = NSNumber(int: task.totalPersist.intValue - 1)
             if task.longestPersist.intValue == 1 {
@@ -243,88 +354,43 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
                     task.longestPersist = NSNumber(int: task.longestPersist.intValue - 1)
                 }
             }
+            clockedTaskNumber -= 1
         }
+        
         manageObjectContextSave()
         
         if finished {
             if indexPath.row != tasksArray.count - 1{
-                if tasksArray[indexPath.row + 1].clockRecord[todayStr] == nil || !(tasksArray[indexPath.row + 1].clockRecord[todayStr]!){
-                    var tempIndexPathArr = [NSIndexPath]()
-                    var tempStateArr = [Bool]()
-                    for index in indexPath.row...self.tasksArray.count - 1{
-                        var row : TaskTableViewCell!
-                        if index >= 9 {
-                            row = self.tableView(self.tableView, cellForRowAtIndexPath: NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        }else {
-                            row = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        }
-                        tempIndexPathArr.append(row.indexPath)
-                        tempStateArr.append(row.finishedState)
-                    }
-                    
-                    exchangeTableViewCellsWithRow1(indexPath.row, row2: tasksArray.count - 1)
-                    for index in indexPath.row...self.tasksArray.count - 1{
-                        var row : TaskTableViewCell!
-                        if index >= 9{
-                            row = self.tableView(self.tableView, cellForRowAtIndexPath: NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        }else{
-                            row = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        }
-                        row.indexPath = tempIndexPathArr[index - indexPath.row]
-                        if index == self.tasksArray.count - 1{
-                            row.finishedState = tempStateArr[indexPath.row - indexPath.row]
-                        }else{
-                            row.finishedState = tempStateArr[index + 1 - indexPath.row]
-                        }
+                var nextTask = tasksArray[indexPath.row + 1]
+                if let nextTaskClockRecord =  nextTask.clockRecord[todayStr] {
+                    if nextTaskClockRecord {
+                        return
                     }
                 }
+                exchangeTableViewCellsWithRow1(indexPath.row, row2: tasksArray.count - 1)
             }
         } else {
             if indexPath.row != 0{
-                if (tasksArray[indexPath.row - 1].clockRecord[todayStr] != nil && tasksArray[indexPath.row - 1].clockRecord[todayStr]!) {
-                    var row1 = tableView.cellForRowAtIndexPath(indexPath) as! TaskTableViewCell
-                    var row2 = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! TaskTableViewCell
-                    //                target.indexPath = cell.indexPath
-                    //                cell.indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    //                swap(&cell.finishedState, &target.finishedState)
-                    let tempCell1IndexPath = row1.indexPath
-                    let tempCell1State = row1.finishedState
-                    
-                    let tempCell2IndexPath = row2.indexPath
-                    let tempCell2State = row2.finishedState
-                    var tempIndexPathArr = [NSIndexPath]()
-                    var tempStateArr = [Bool]()
-                    for index in 0...indexPath.row{
-                        let row = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        tempIndexPathArr.append(row.indexPath)
-                        tempStateArr.append(row.finishedState)
+                var lastTask = tasksArray[indexPath.row - 1]
+                if let lastTaskClockRecord = lastTask.clockRecord[todayStr]{
+                    if !lastTaskClockRecord{
+                        return
                     }
-                    
-                    exchangeTableViewCellsWithRow1(indexPath.row, row2: 0)
-                    for index in 0...indexPath.row{
-                        let row = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! TaskTableViewCell
-                        row.indexPath = tempIndexPathArr[index]
-                        if index == 0{
-                            row.finishedState = tempStateArr[indexPath.row]
-                        }else{
-                            row.finishedState = tempStateArr[index - 1]
-                        }
-                    }
-                    
                 }
+                exchangeTableViewCellsWithRow1(indexPath.row, row2: 0)
             }
         }
-        
     }
-    
 
     //End
-    
+
     func playSound(){
-        var  soundID : SystemSoundID = 0
-        var url : NSURL = NSBundle.mainBundle().URLForResource("clocked", withExtension: "caf")!
-        AudioServicesCreateSystemSoundID(url as CFURLRef, &soundID)
-        AudioServicesPlaySystemSound(soundID)
+        if NSUserDefaults.standardUserDefaults().objectForKey("soundEnabledState") as! Bool {
+            var  soundID : SystemSoundID = 1
+            var url : NSURL = NSBundle.mainBundle().URLForResource("clocked", withExtension: "caf")!
+            AudioServicesCreateSystemSoundID(url as CFURLRef, &soundID)
+            AudioServicesPlaySystemSound(soundID)
+        }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -352,6 +418,7 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
         
     }
     
+    
     func takeSnapshot(navigationBar withNavigationBar:Bool = false) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, false, UIScreen.mainScreen().scale);
         if withNavigationBar {
@@ -364,5 +431,17 @@ class MasterViewController: UIViewController , UITableViewDelegate, UITableViewD
         UIGraphicsEndImageContext();
         return image;
     }
+    
 
+
+}
+
+extension NSDate{
+    func dateString() -> String{
+        var compo = NSCalendar.currentCalendar().components(NSCalendarUnit.DayCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.YearCalendarUnit, fromDate: self)
+        let month :String = compo.month < 10 ? "0\(compo.month)" : "\(compo.month)"
+        let day :String = compo.day < 10 ? "0\(compo.day)" : "\(compo.day)"
+        let dateStr = "\(compo.year)\(month)\(day)"
+        return dateStr
+    }
 }
